@@ -339,6 +339,37 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
 .bi span{color:var(--muted);font-size:13.5px;line-height:1.45}
 @media (max-width:1100px){.built{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:640px){.built{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* slide mode: every section is one full-screen slide, the rail slides sideways */
+html,body{height:100%}
+html{scroll-behavior:auto;overflow:hidden}
+body{display:flex;flex-direction:column;overflow:hidden}
+.bar{position:relative;top:auto;flex:none}
+.deck{position:relative;z-index:1;flex:1;min-height:0;overflow:hidden}
+.rail{display:flex;height:100%;width:100%;transform:translateX(calc(var(--i,0) * -100%));transition:transform .75s cubic-bezier(.2,.7,.2,1)}
+.rail.snap{transition:none}
+.slide{flex:0 0 100%;width:100%;height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#22314d transparent}
+.slide .wrap{min-height:100%;justify-content:center;gap:clamp(36px,5vw,64px);padding-block:clamp(28px,4vw,56px) 112px}
+#contact .blk,#contact footer{margin-top:auto}
+.prog{transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.slide:not(.on) .rv{opacity:0}
+.slide.on .rv{animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards}
+.slide.on .rv:nth-child(2){animation-delay:.08s}
+.slide.on .rv:nth-child(3){animation-delay:.16s}
+.slide.on .rv:nth-child(4){animation-delay:.24s}
+.slide.on .rv:nth-child(5){animation-delay:.32s}
+.slide:not(.on) .pr i{width:0}
+.ctl{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:6px;padding:6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 40px -12px rgba(0,0,0,.7)}
+.arr{display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;transition:border-color .25s,color .25s,opacity .25s}
+.arr:hover:not(:disabled){border-color:var(--tech);color:var(--tech)}
+.arr:disabled{opacity:.3;cursor:default}
+.dots{display:flex;align-items:center}
+.dots button{position:relative;width:24px;height:40px;padding:0;border:0;background:none;cursor:pointer}
+.dots button::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:4px;background:#2b3b5c;transform:translate(-50%,-50%);transition:width .35s,background .35s,box-shadow .35s}
+.dots button:hover::after{background:var(--muted)}
+.dots button.on::after{width:20px;background:var(--tech);box-shadow:0 0 12px var(--tech)}
+.cnt{padding:0 8px 0 4px;color:var(--muted);font:500 12px var(--f-mono);letter-spacing:.08em;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:560px){.cnt{display:none}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
@@ -351,22 +382,24 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
 
 <header class="bar">
   <div class="bar-in gutter">
-    <a class="mini" href="#top"><b>DA</b><span class="nm">Dennis Alexandry</span></a>
+    <a class="mini" href="#intro"><b>DA</b><span class="nm">Dennis Alexandry</span></a>
     <nav class="nav" aria-label="Main">
       <div class="links" id="links">
-        <a href="#pengalaman">Career</a>
-        <a href="#karya">Work</a>
+        <a href="#career">Career</a>
+        <a href="#work">Work</a>
         <a href="#skills">Skills</a>
         <a href="#cv">CV</a>
-        <a href="#kontak">Contact</a>
+        <a href="#contact">Contact</a>
       </div>
     </nav>
   </div>
   <i class="prog" id="prog" aria-hidden="true"></i>
 </header>
 
-<main class="wrap gutter" id="top">
-  <section class="hero" id="tentang">
+<main class="deck" id="deck">
+<div class="rail" id="rail">
+<section class="slide on" id="intro" data-title="Intro"><div class="wrap gutter">
+  <div class="hero">
     <div>
       <div class="mono eyebrow rise" style="--i:0"><span class="dot"></span> Portfolio<i class="caret"></i></div>
       <h1>
@@ -378,7 +411,7 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
         I'm <b class="gt">Dennis Alexandry</b>, Data &amp; Analytics Manager at MRA Group in Jakarta. For six years I've worked close to <b class="gm">CEOs and COOs</b> across conglomerate, media and proptech businesses, turning operational data into <b class="gs">strategy and decisions</b> teams can act on.
       </p>
       <div class="btns rise" style="--i:6">
-        <a class="btn pri" href="#karya">See the work</a>
+        <a class="btn pri" href="#work">See the work</a>
         <a class="btn" href="#cv">View CV</a>
         <a class="btn" href="https://www.linkedin.com/in/dennisalexandry" target="_blank" rel="noopener">LinkedIn</a>
       </div>
@@ -399,7 +432,7 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
       </div>
       <div class="legend mono"><span><i style="background:var(--tech)"></i>Data</span><span><i style="background:var(--mkt)"></i>Strategy</span><span><i style="background:var(--sales)"></i>Market &amp; media</span></div>
     </div>
-  </section>
+  </div>
 
   <div class="ticker" aria-hidden="true"><div class="track" id="track">
     <span style="--c:var(--tech)"><i></i><b>MRA Group</b></span>
@@ -417,7 +450,9 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
     <span style="--c:var(--sales)"><i></i>Competitive analysis</span>
     <span style="--c:var(--mkt)"><i></i>Executive advisory</span>
   </div></div>
+</div></section>
 
+<section class="slide" id="approach" data-title="Approach"><div class="wrap gutter">
   <div class="stats">
     <div class="card stat spot rv" style="--c:var(--tech)"><b data-n="6">6</b><span>Years in data and strategy</span></div>
     <div class="card stat spot rv" style="--c:var(--mkt)"><b data-n="3">3</b><span>Company groups: MRA Group, CT Corp, 99 Group</span></div>
@@ -425,7 +460,7 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
     <div class="card stat spot rv" style="--c:var(--lav)"><b data-n="4">4</b><span>Roles, each reporting directly to a Country Manager, CEO or COO</span></div>
   </div>
 
-  <section id="pendekatan">
+  <div class="blk">
     <div class="sec-top rv"><span class="kicker mono">// how I work</span><h2>Four working habits</h2></div>
     <div class="grid4">
       <div class="card pr spot rv" style="--c:var(--tech)"><i></i><b>One source of truth</b><span>Data governance, quality and integration come first, so every unit talks about the same numbers.</span></div>
@@ -433,9 +468,11 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
       <div class="card pr spot rv" style="--c:var(--sales)"><i></i><b>Executive-ready</b><span>Findings and recommendations are presented concisely to the CEO and executive team.</span></div>
       <div class="card pr spot rv" style="--c:var(--lav)"><i></i><b>Data culture</b><span>Teams are pushed to use data every day, so decisions get faster and evidence-based.</span></div>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section id="pengalaman">
+<section class="slide" id="career" data-title="Career"><div class="wrap gutter">
+  <div class="blk">
     <div class="sec-top rv">
       <span class="kicker mono">// career</span>
       <h2>Who I reported to, since 2020</h2>
@@ -540,9 +577,11 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
         </div></div></div>
       </article>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section id="karya">
+<section class="slide" id="work" data-title="Work"><div class="wrap gutter">
+  <div class="blk">
     <div class="sec-top rv">
       <span class="kicker mono">// work</span>
       <h2>Selected work</h2>
@@ -637,9 +676,11 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
         <div class="tech">Curriculum · HTML slides · Landing page</div>
       </article>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section id="skills">
+<section class="slide" id="skills" data-title="Skills"><div class="wrap gutter">
+  <div class="blk">
     <div class="sec-top rv"><span class="kicker mono">// skills</span><h2>Tools and expertise</h2></div>
     <div class="skills">
       <div class="card sk spot rv" style="--c:var(--tech)"><h3>Data &amp; Analytics</h3><ul><li>Business Intelligence</li><li>Data Governance</li><li>Data Quality</li><li>Data Integration</li><li>Data Warehousing</li><li>Big Data</li><li>Dashboarding &amp; Reporting</li><li>Advanced Analytics</li></ul></div>
@@ -647,9 +688,11 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
       <div class="card sk spot rv" style="--c:var(--sales)"><h3>Leadership</h3><ul><li>Executive Advisory</li><li>Stakeholder Management</li><li>Cross-functional Collaboration</li><li>Project Management</li><li>Data Culture Adoption</li><li>Negotiation</li></ul></div>
       <div class="card sk spot rv" style="--c:var(--lav)"><h3>Tools</h3><ul><li>PostgreSQL</li><li>SQL</li><li>DBeaver</li><li>Excel</li><li>PowerPoint</li><li>Iconosquare</li><li>HTML / JavaScript</li><li>Next.js</li><li>Vercel</li></ul></div>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section id="cv">
+<section class="slide" id="cv" data-title="CV"><div class="wrap gutter">
+  <div class="blk">
     <div class="sec-top rv"><span class="kicker mono">// cv</span><h2>Profile at a glance</h2></div>
     <div class="dossier">
       <div class="card sum spot rv" style="--c:var(--tech)">
@@ -668,9 +711,11 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
         </dl>
       </div>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section id="kontak">
+<section class="slide" id="contact" data-title="Contact"><div class="wrap gutter">
+  <div class="blk">
     <div class="card cta spot rv" style="--c:var(--tech)">
       <span class="kicker mono" style="margin:0">// contact</span>
       <h2>Got data that needs to become a decision?</h2>
@@ -681,12 +726,20 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
         <a class="btn" href="https://www.linkedin.com/in/dennisalexandry" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
-  </section>
+  </div>
 
   <footer class="credit">
     <span>© 2026 Dennis Alexandry</span>
     <span>Jakarta, Indonesia</span>
   </footer>
+</div></section>
+</div>
+<nav class="ctl" aria-label="Slide navigation">
+  <button class="arr" id="prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div class="dots" id="dots"></div>
+  <span class="cnt" id="cnt">01 / 07</span>
+  <button class="arr" id="next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+</nav>
 </main>
 
 <script>
@@ -739,62 +792,123 @@ footer.credit{border-top:1px solid var(--line);padding-top:28px;display:flex;fle
   var track = $('#track');
   if (track) track.innerHTML += track.innerHTML;
 
-  /* reveal on scroll: visible by default, below-the-fold items ease in */
-  if (hasIO && !reduce) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('hid'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-    $$('.rv').forEach(function (el) {
-      if (el.getBoundingClientRect().top > window.innerHeight * 0.95) el.classList.add('hid');
-      io.observe(el);
+  /* slides */
+  var rail = $('#rail'), deck = $('#deck'), slides = $$('.slide'), links = $$('#links a');
+  var prevBtn = $('#prev'), nextBtn = $('#next'), cnt = $('#cnt'), dots = $('#dots'), prog = $('#prog');
+  var ids = slides.map(function (s) { return s.id; });
+  var idx = 0, locked = false;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  slides.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Go to ' + s.getAttribute('data-title'));
+    b.title = s.getAttribute('data-title');
+    b.addEventListener('click', function () { go(i); });
+    dots.appendChild(b);
+  });
+  var dotBtns = $$('button', dots);
+
+  function countUp(slide) {
+    if (reduce) return;
+    $$('[data-n]', slide).forEach(function (el) {
+      if (el._done) return;
+      el._done = true;
+      var n = parseInt(el.getAttribute('data-n'), 10), t0 = performance.now();
+      el.textContent = '0';
+      (function tick(t) {
+        var p = Math.min(1, (t - t0) / 1100);
+        el.textContent = p < 1 ? Math.round(n * (1 - Math.pow(1 - p, 3))) : n;
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
     });
   }
 
-  /* counters */
-  if (hasIO && !reduce) {
-    $$('[data-n]').forEach(function (el) {
-      var n = parseInt(el.getAttribute('data-n'), 10), done = false;
-      var o = new IntersectionObserver(function (es) {
-        if (!es[0].isIntersecting || done) return;
-        done = true;
-        var t0 = performance.now();
-        (function tick(t) {
-          var p = Math.min(1, (t - t0) / 1100);
-          el.textContent = p < 1 ? Math.round(n * (1 - Math.pow(1 - p, 3))) : n;
-          if (p < 1) requestAnimationFrame(tick);
-        })(t0);
-      }, { threshold: 0.6 });
-      o.observe(el);
+  function paint(i, instant) {
+    if (instant) rail.classList.add('snap');
+    idx = i;
+    rail.style.setProperty('--i', i);
+    if (instant) { void rail.offsetWidth; rail.classList.remove('snap'); }
+    slides.forEach(function (s, k) {
+      var on = k === i;
+      s.classList.toggle('on', on);
+      if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
+      s.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
+    dotBtns.forEach(function (b, k) {
+      b.classList.toggle('on', k === i);
+      if (k === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+    });
+    links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href').slice(1) === ids[i]); });
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === slides.length - 1;
+    cnt.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+    prog.style.setProperty('--p', ((i + 1) / slides.length * 100) + '%');
   }
 
-  /* nav highlight + scroll progress */
-  var links = $$('#links a');
-  var map = {};
-  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-  if (hasIO) {
-    var so = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        links.forEach(function (a) { a.classList.remove('on'); });
-        var a = map[e.target.id];
-        if (a) a.classList.add('on');
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) so.observe(s); });
+  function go(i, instant) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    if (i !== idx) slides[i].scrollTop = 0;
+    paint(i, instant);
+    countUp(slides[i]);
+    if (location.hash.slice(1) !== ids[i]) { try { location.hash = ids[i]; } catch (e) {} }
   }
-  var prog = $('#prog'), ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      ticking = false;
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      prog.style.setProperty('--p', (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%');
-    });
+  function step(d) {
+    if (locked) return;
+    var n = idx + d;
+    if (n < 0 || n >= slides.length) return;
+    locked = true;
+    setTimeout(function () { locked = false; }, reduce ? 0 : 650);
+    go(n);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  function tall(s) { return s.scrollHeight > s.clientHeight + 4; }
+
+  prevBtn.addEventListener('click', function () { step(-1); });
+  nextBtn.addEventListener('click', function () { step(1); });
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var i = ids.indexOf(a.getAttribute('href').slice(1));
+    e.preventDefault();
+    if (i >= 0) go(i);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    var k = e.key, t = tall(slides[idx]);
+    if (k === 'ArrowRight' || ((k === 'ArrowDown' || k === 'PageDown') && !t)) { e.preventDefault(); step(1); }
+    else if (k === 'ArrowLeft' || ((k === 'ArrowUp' || k === 'PageUp') && !t)) { e.preventDefault(); step(-1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+  });
+
+  deck.addEventListener('wheel', function (e) {
+    var ax = Math.abs(e.deltaX), ay = Math.abs(e.deltaY);
+    if (ax > ay && ax > 24) { e.preventDefault(); step(e.deltaX > 0 ? 1 : -1); return; }
+    if (ay > 24 && !tall(slides[idx])) { e.preventDefault(); step(e.deltaY > 0 ? 1 : -1); }
+  }, { passive: false });
+
+  var tx = 0, ty = 0, tt = 0;
+  deck.addEventListener('touchstart', function (e) {
+    var t = e.changedTouches[0];
+    tx = t.clientX; ty = t.clientY; tt = Date.now();
+  }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    var t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty;
+    if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.4 && Date.now() - tt < 800) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  window.addEventListener('hashchange', function () {
+    var i = ids.indexOf(location.hash.slice(1));
+    if (i >= 0 && i !== idx) go(i);
+  });
+
+  var start = ids.indexOf(location.hash.slice(1));
+  paint(start >= 0 ? start : 0, true);
+  countUp(slides[idx]);
 
   /* pointer glow */
   var cur = $('.bg .cur'), raf = 0, px = 0, py = 0;
