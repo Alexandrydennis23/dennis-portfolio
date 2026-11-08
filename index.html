@@ -43,7 +43,7 @@ section{scroll-margin-top:84px}
 @keyframes drift{to{background-position:0 56px,0 0}}
 @keyframes wander{to{transform:translate(8vmax,6vmax)}}
 @keyframes scan{from{transform:translateY(-160px)}to{transform:translateY(105vh)}}
-@keyframes chroma{0%{text-shadow:-7px 0 rgba(46,230,214,.9),7px 0 rgba(255,111,145,.9);filter:blur(2px)}100%{text-shadow:0 0 0 transparent;filter:none}}
+@keyframes chroma{0%{text-shadow:-7px 0 rgba(46,230,214,.9),7px 0 rgba(255,111,145,.9)}100%{text-shadow:0 0 0 transparent}}
 @keyframes blink{50%{opacity:0}}
 @keyframes marquee{to{transform:translateX(-50%)}}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--tech) 55%,transparent)}50%{box-shadow:0 0 0 7px transparent}}
@@ -54,15 +54,15 @@ section{scroll-margin-top:84px}
 /* background layers */
 .bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .bg i{position:absolute;display:block}
-.bg .grid{inset:0;background-image:linear-gradient(rgba(120,170,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.07) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 0%,#000 25%,transparent 85%);mask-image:radial-gradient(ellipse 85% 75% at 50% 0%,#000 25%,transparent 85%);animation:drift 24s linear infinite}
-.bg .glow{width:60vmax;height:60vmax;border-radius:50%}
+.bg .grid{inset:0;background-image:linear-gradient(rgba(120,170,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,170,255,.07) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 0%,#000 25%,transparent 85%);mask-image:radial-gradient(ellipse 85% 75% at 50% 0%,#000 25%,transparent 85%)}
+.bg .glow{width:60vmax;height:60vmax;border-radius:50%;will-change:transform}
 .bg .g1{left:-20vmax;top:-26vmax;background:radial-gradient(closest-side,rgba(46,230,214,.16),transparent);animation:wander 16s ease-in-out infinite alternate}
 .bg .g2{right:-22vmax;top:8vmax;background:radial-gradient(closest-side,rgba(255,111,145,.13),transparent);animation:wander 19s ease-in-out infinite alternate-reverse}
-.bg .cur{inset:0;background:radial-gradient(560px circle at var(--cx,72%) var(--cy,18%),rgba(46,230,214,.07),transparent 60%)}
+.bg .cur{left:0;top:0;width:640px;height:640px;margin:-320px 0 0 -320px;border-radius:50%;background:radial-gradient(closest-side,rgba(46,230,214,.075),transparent);transform:translate3d(var(--cx,72vw),var(--cy,18vh),0);will-change:transform}
 .bg .scan{left:0;right:0;top:0;height:140px;background:linear-gradient(180deg,transparent,rgba(46,230,214,.05),transparent);animation:scan 10s linear infinite}
 
 /* header */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:linear-gradient(90deg,color-mix(in srgb,var(--tech) 30%,#04141a),color-mix(in srgb,var(--tech) 16%,#050912));border-bottom:1px solid color-mix(in srgb,var(--tech) 55%,transparent);box-shadow:0 6px 30px -12px var(--tech)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(90deg,color-mix(in srgb,var(--tech) 30%,#04141a),color-mix(in srgb,var(--tech) 16%,#050912));border-bottom:1px solid color-mix(in srgb,var(--tech) 55%,transparent);box-shadow:0 6px 30px -12px var(--tech)}
 .bar-in{max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
 .mini{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 13px var(--f-display);letter-spacing:.02em;white-space:nowrap}
 .mini b{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--tech);color:#02130F;font:700 11px var(--f-display);box-shadow:0 0 16px -2px var(--tech)}
@@ -348,18 +348,18 @@ body{display:flex;flex-direction:column;overflow:hidden}
 .deck{position:relative;z-index:1;flex:1;min-height:0;overflow:hidden}
 .rail{display:flex;height:100%;width:100%;transform:translateX(calc(var(--i,0) * -100%));transition:transform .75s cubic-bezier(.2,.7,.2,1)}
 .rail.snap{transition:none}
-.slide{flex:0 0 100%;width:100%;height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#22314d transparent}
+.rail{will-change:transform}
+.slide{flex:0 0 100%;width:100%;height:100%;visibility:hidden;contain:layout paint;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#22314d transparent}
 .slide .wrap{min-height:100%;justify-content:center;gap:clamp(36px,5vw,64px);padding-block:clamp(28px,4vw,56px) 112px}
-#contact .blk,#contact footer{margin-top:auto}
+#s-contact .blk,#s-contact footer{margin-top:auto}
 .prog{transition:width .6s cubic-bezier(.2,.7,.2,1)}
-.slide:not(.on) .rv{opacity:0}
-.slide.on .rv{animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards}
+.slide.on .rv{animation:lift .7s cubic-bezier(.2,.7,.2,1) backwards}
 .slide.on .rv:nth-child(2){animation-delay:.08s}
 .slide.on .rv:nth-child(3){animation-delay:.16s}
 .slide.on .rv:nth-child(4){animation-delay:.24s}
 .slide.on .rv:nth-child(5){animation-delay:.32s}
 .slide:not(.on) .pr i{width:0}
-.ctl{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:6px;padding:6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 40px -12px rgba(0,0,0,.7)}
+.ctl{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:6px;padding:6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);box-shadow:0 10px 40px -12px rgba(0,0,0,.7)}
 .arr{display:grid;place-items:center;width:40px;height:40px;padding:0;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;transition:border-color .25s,color .25s,opacity .25s}
 .arr:hover:not(:disabled){border-color:var(--tech);color:var(--tech)}
 .arr:disabled{opacity:.3;cursor:default}
@@ -370,6 +370,11 @@ body{display:flex;flex-direction:column;overflow:hidden}
 .dots button.on::after{width:20px;background:var(--tech);box-shadow:0 0 12px var(--tech)}
 .cnt{padding:0 8px 0 4px;color:var(--muted);font:500 12px var(--f-mono);letter-spacing:.08em;font-variant-numeric:tabular-nums;white-space:nowrap}
 @media (max-width:560px){.cnt{display:none}}
+@keyframes lift{from{transform:translateY(16px)}to{transform:none}}
+.slide.on,.slide.near{visibility:visible}
+.slide:not(.on) *,.slide:not(.on) *::before,.slide:not(.on) *::after{animation-play-state:paused!important}
+.ctl{background:#0a111f}
+.bar{background:linear-gradient(90deg,#0c3a3c,#0a1f2a 60%,#07111d)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
@@ -398,7 +403,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
 
 <main class="deck" id="deck">
 <div class="rail" id="rail">
-<section class="slide on" id="intro" data-title="Intro"><div class="wrap gutter">
+<section class="slide on" id="s-intro" data-id="intro" data-title="Intro"><div class="wrap gutter">
   <div class="hero">
     <div>
       <div class="mono eyebrow rise" style="--i:0"><span class="dot"></span> Portfolio<i class="caret"></i></div>
@@ -452,7 +457,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div></div>
 </div></section>
 
-<section class="slide" id="approach" data-title="Approach"><div class="wrap gutter">
+<section class="slide" id="s-approach" data-id="approach" data-title="Approach"><div class="wrap gutter">
   <div class="stats">
     <div class="card stat spot rv" style="--c:var(--tech)"><b data-n="6">6</b><span>Years in data and strategy</span></div>
     <div class="card stat spot rv" style="--c:var(--mkt)"><b data-n="3">3</b><span>Company groups: MRA Group, CT Corp, 99 Group</span></div>
@@ -471,7 +476,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div>
 </div></section>
 
-<section class="slide" id="career" data-title="Career"><div class="wrap gutter">
+<section class="slide" id="s-career" data-id="career" data-title="Career"><div class="wrap gutter">
   <div class="blk">
     <div class="sec-top rv">
       <span class="kicker mono">// career</span>
@@ -580,7 +585,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div>
 </div></section>
 
-<section class="slide" id="work" data-title="Work"><div class="wrap gutter">
+<section class="slide" id="s-work" data-id="work" data-title="Work"><div class="wrap gutter">
   <div class="blk">
     <div class="sec-top rv">
       <span class="kicker mono">// work</span>
@@ -679,7 +684,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div>
 </div></section>
 
-<section class="slide" id="skills" data-title="Skills"><div class="wrap gutter">
+<section class="slide" id="s-skills" data-id="skills" data-title="Skills"><div class="wrap gutter">
   <div class="blk">
     <div class="sec-top rv"><span class="kicker mono">// skills</span><h2>Tools and expertise</h2></div>
     <div class="skills">
@@ -691,7 +696,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div>
 </div></section>
 
-<section class="slide" id="cv" data-title="CV"><div class="wrap gutter">
+<section class="slide" id="s-cv" data-id="cv" data-title="CV"><div class="wrap gutter">
   <div class="blk">
     <div class="sec-top rv"><span class="kicker mono">// cv</span><h2>Profile at a glance</h2></div>
     <div class="dossier">
@@ -714,7 +719,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   </div>
 </div></section>
 
-<section class="slide" id="contact" data-title="Contact"><div class="wrap gutter">
+<section class="slide" id="s-contact" data-id="contact" data-title="Contact"><div class="wrap gutter">
   <div class="blk">
     <div class="card cta spot rv" style="--c:var(--tech)">
       <span class="kicker mono" style="margin:0">// contact</span>
@@ -795,7 +800,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
   /* slides */
   var rail = $('#rail'), deck = $('#deck'), slides = $$('.slide'), links = $$('#links a');
   var prevBtn = $('#prev'), nextBtn = $('#next'), cnt = $('#cnt'), dots = $('#dots'), prog = $('#prog');
-  var ids = slides.map(function (s) { return s.id; });
+  var ids = slides.map(function (s) { return s.getAttribute('data-id'); });
   var idx = 0, locked = false;
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
@@ -832,6 +837,7 @@ body{display:flex;flex-direction:column;overflow:hidden}
     slides.forEach(function (s, k) {
       var on = k === i;
       s.classList.toggle('on', on);
+      s.classList.toggle('near', Math.abs(k - i) === 1);
       if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
       s.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
@@ -848,8 +854,9 @@ body{display:flex;flex-direction:column;overflow:hidden}
 
   function go(i, instant) {
     i = Math.max(0, Math.min(slides.length - 1, i));
+    var far = Math.abs(i - idx) > 1;
     if (i !== idx) slides[i].scrollTop = 0;
-    paint(i, instant);
+    paint(i, instant || far);
     countUp(slides[i]);
     if (location.hash.slice(1) !== ids[i]) { try { location.hash = ids[i]; } catch (e) {} }
   }
@@ -905,6 +912,10 @@ body{display:flex;flex-direction:column;overflow:hidden}
     var i = ids.indexOf(location.hash.slice(1));
     if (i >= 0 && i !== idx) go(i);
   });
+
+  function unscroll() { if (deck.scrollLeft || deck.scrollTop) { deck.scrollLeft = 0; deck.scrollTop = 0; } }
+  deck.addEventListener('scroll', unscroll);
+  window.addEventListener('scroll', function () { window.scrollTo(0, 0); });
 
   var start = ids.indexOf(location.hash.slice(1));
   paint(start >= 0 ? start : 0, true);
